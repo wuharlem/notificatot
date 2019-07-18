@@ -1,8 +1,12 @@
 const alarm        = import("./alarms.js");
 const notification = import("./notifications.js");
 
-let button1   = document.getElementById("button1");
-let timer     = document.getElementById('timer');
+let button1    = document.getElementById("button1");
+let timer      = document.getElementById('timer');
+let html_hour  = document.getElementById('hour');
+let html_min   = document.getElementById('minute');
+let html_title = document.getElementById('title');
+let html_msg   = document.getElementById('msg');
 
 //helper_function
 function time_helper(str) {
@@ -10,6 +14,12 @@ function time_helper(str) {
         return "0"+str
     } else return str
 }
+
+function time_helper_rev(str) {
+    if (parseInt(str, 10) < 10){
+        return str[1]
+    } else return str
+  }
 
 function show_alarms(dict_input) {
 
@@ -28,9 +38,9 @@ function show_alarms(dict_input) {
     console.log(items_value);
 
     // HTML
-    text =  "<ul>";
+    text =  "<table>";
     items_value.forEach(myFunction);
-    text += "</ul>";
+    text += "</table>";
 
 
     timer.innerHTML = text;
@@ -38,13 +48,16 @@ function show_alarms(dict_input) {
     function myFunction(k) {
         if (k[0] == "0520") text
         else
-            text += "<li>" + k[0].substring(0,2) + ":" + k[0].substring(2,4)+
-            "&nbsp"+
-            k[1]["content"]["title"]+"&nbsp&nbsp&nbsp"+k[1]["content"]["message"]+
-            "<button id=\""+ k[0] +"\">X</button></li>";
+            text += 
+            "<tr>"  
+            + "<th>" + k[0].substring(0,2) + ":" + k[0].substring(2,4) + "</th>"
+            + "<th>" + k[1]["content"]["title"] + "</th>"
+            + "<th>" + k[1]["content"]["message"] + "</th>"
+            + "<th>" + "<button id=\""+ k[0] +"\">X</button><img src=\"pen.png\" class=\"icon\" id=\"" + k[0] + "\">" + "</th>"
+            + "</tr>";
     } 
 }
-
+ 
 function make_selection(id, num_start, num_end) {
     let element      = document.getElementById(id);
     let doc_fragment = document.createDocumentFragment();
@@ -63,8 +76,9 @@ chrome.storage.sync.get('dict', data => {
     show_alarms(data.dict);
 });
 
-//delete event
+//delete/modify event
 timer.addEventListener('click', function(event){
+    console.log(event.target.tagName);
     if(event.target.tagName == "BUTTON") {
         chrome.storage.sync.get('dict', data => {
             delete data.dict[event.target['id']]
@@ -78,6 +92,16 @@ timer.addEventListener('click', function(event){
             });
             //refresh
             show_alarms(data.dict);
+        });
+    }
+
+    if(event.target.tagName == "IMG") {
+        chrome.storage.sync.get('dict', data => {
+            let get_data = data.dict[event.target['id']]
+            html_hour.value  = time_helper_rev(get_data['time']['hour']);
+            html_min.value   = time_helper_rev(get_data['time']['minute']);
+            html_title.value = get_data['content']['title'];
+            html_msg.value   = get_data['content']['message'];
         });
     }
 });
@@ -103,7 +127,17 @@ button1.addEventListener('click', function(){
 
     //save alarm
     alarm.then(promose => {
-        promose.setAlarm(hour.value, minute.value);
+        let today = new Date();
+        let date  = today.getDate();
+        if (today.getHours() > hour.value) {
+            date = date + 1;
+        } else if (today.getHours() == hour.value) {
+            if (today.getMinutes() > minute.value) {
+                date = date + 1;
+            };
+        };
+        
+        promose.setAlarm(hour.value, minute.value, date);
     }).catch(err => console.log(err));
     //save storage
     chrome.storage.sync.get('dict', data => {

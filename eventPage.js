@@ -35,7 +35,16 @@ chrome.runtime.onInstalled.addListener(function() {
 
         for (var k in data.dict) {
           alarm.then(p => {
-            p.setAlarm(time_helper_rev(k[0]+k[1]), time_helper_rev(k[2]+k[3]))
+            let today = new Date();
+            let date  = today.getDate();
+            if (today.getHours() > time_helper_rev(k[0]+k[1])) {
+                date = date + 1;
+            } else if (today.getHours() == time_helper_rev(k[0]+k[1])) {
+                if (today.getMinutes() > time_helper_rev(k[2]+k[3])) {
+                    date = date + 1;
+                };
+            };
+            p.setAlarm(time_helper_rev(k[0]+k[1]), time_helper_rev(k[2]+k[3]), date)
           });
         };
       };

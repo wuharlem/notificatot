@@ -6,7 +6,7 @@ function time_helper(str) {
 }
 
 
-export function setAlarm(hour, minute, period = 24*60, date = false){
+export function setAlarm(hour, minute, date = false, period = 24*60){
     let whenToRing = new Date();
     
     if (date){

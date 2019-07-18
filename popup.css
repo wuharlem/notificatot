@@ -1,5 +1,5 @@
 body {
-	font-family: "微軟正黑體", "Lucida Sans Unicode", "Lucida Grande", "Arial Narrow", sans-serif, 'Noto Serif TC', serif;;
+	font-family: 'Noto Serif TC', serif;
     width: 350px;
 }
 
@@ -10,24 +10,27 @@ body {
     padding: 10px;
     font-size: 20px;
     font-weight:  bold;
-    font-family: 'Noto Serif TC', serif;
-    /* border: 1px solid black; */
-    
+    font-family: 'Maven Pro', serif;
 }
 
 
 .left {
     height: 20px;
-    /* border: 1px solid black;   */
     padding: 0 2px 0 0; 
 }
 
+.icon {
+    height: 13px;
+    opacity: 0.7;
+}
+
+
 #hour, #minute{
-    font-family: 'Noto Serif TC', serif;
     font-weight:  bold;
     font-size: 15px;
     border: 6px solid transparent;
     overflow:scroll;
+    font-family: 'Maven Pro', serif;
 }
 
 button {
@@ -36,7 +39,8 @@ button {
     width: 20px;
     border: none;
     background-color: inherit;
-    color: rgba(216, 37, 5, 0.596);
+    /* color: rgba(216, 37, 5, 0.596);  */
+    color: rgb(119, 119, 119);
     font-weight: solid;
     cursor: pointer;
 }
@@ -46,12 +50,12 @@ button {
     height: 20px;
     width: 60px;
     padding-bottom: 20px; 
-    font-family: 'Noto Serif TC', serif;
     font-weight:  bold;
     font-size: 15px;
     border: 1.5px solid ;
     border-color: rgb(216, 214, 214);
     color: black;
+    font-family: 'Maven Pro', serif;
 }
 
 ul {
@@ -60,26 +64,21 @@ ul {
 
 #timer {
     padding-top: 10px;
-    font-size: 12px;
-    font-family: 'Noto Serif TC', serif;
-    /* font-weight:  bold; */
     font-size: 15px;
     overflow:scroll;
     overflow-y: scroll;
     overflow-x: scroll;
     height: 90px;
     width: 100%;
-    /* border: 1px solid black;    */
-    
+    font-family: 'Maven Pro', serif;
 }
 
 
 #notification {
     padding-top: 38px;
-    /* height: 100px; */
     width: 100%;
-    /* border: 5px solid red; */
     text-align: center;
+    font-family: 'Maven Pro', serif;
 }
 
 #right {
@@ -100,26 +99,37 @@ ul {
     width: 50%;
     text-align: center;
     font-size: 16px;
-    font-family: 'Noto Serif TC', serif;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     margin-bottom: 10px;
+    font-family: 'Maven Pro', serif;
 }
 
 ::placeholder {
     text-align: center;  
     font-size: 16px;
-    font-family: 'Noto Serif TC', serif;
 }
 
 #bottom {
-    /* margin-top: 120px; */
     margin-bottom: 10px;
     height: 10px;
     float: bottom;
     font-size: 12px;
-    font-family: 'Noto Serif TC', serif;
     font-weight:  bold;
-    /* border: 1px solid red; */
+}
+
+table {
+    padding-top: 10px;
+    font-size: 15px;
+    overflow:scroll;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    height: 90px;
+    width: 100%;
+    font-family: 'Maven Pro', serif;
+}
+
+table th{
+    font-weight:  lighter;
 }
