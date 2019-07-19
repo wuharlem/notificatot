@@ -1,6 +1,6 @@
 body {
 	font-family: 'Noto Serif TC', serif;
-    width: 350px;
+    width: 375px;
 }
 
 
@@ -143,4 +143,5 @@ table {
 
 table th{
     font-weight:  lighter;
+    color: rgb(104, 104, 104);
 }

@@ -55,7 +55,7 @@ function show_alarms(dict_input) {
         + "<th>" + k[0].substring(0,2) + ":" + k[0].substring(2,4) + "</th>"
         + "<th>" + k[1]["content"]["title"] + "</th>"
         + "<th>" + k[1]["content"]["message"] + "</th>"
-        + "<th>" + "<button id=\""+ k[0] +"\">X</button><img src=\"pen.png\" class=\"icon\" id=\"" + k[0] + "\">" + "</th>"
+        + "<th>" + "<img src=\"pen.png\" class=\"icon\" id=\"" + k[0] + "\"><button id=\""+ k[0] +"\">X</button>" + "</th>"
         + "</tr>";
     }
 };
@@ -63,10 +63,10 @@ function show_alarms(dict_input) {
 function make_selection(id, num_start, num_end) {
     let element      = document.getElementById(id);
     let doc_fragment = document.createDocumentFragment();
-    for (var i = num_start; i <= num_end; i++) {
-        var option = document.createElement('option'); // create the option element
-        option.value = i; // set the value property
-        option.appendChild(document.createTextNode(i)); // set the textContent in a safe way.
+    for (let i = num_start; i <= num_end; i++) {
+        let option = document.createElement('option'); // create the option element
+        option.value = i; // set the value property  
+        option.appendChild(document.createTextNode(timeUIchange(i))); // set the textContent in a safe way.
         doc_fragment.appendChild(option); // append the option to the document fragment
     }
     element.appendChild(doc_fragment); // append the document fragment to the DOM. this is the better way rather than setting innerHTML a bunch of times (or even once with a long string)
