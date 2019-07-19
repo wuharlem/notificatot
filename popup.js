@@ -53,6 +53,7 @@ function show_alarms(dict_input) {
     function myFunction(k) {
         text += "<tr>"
         + "<th>" + k[0].substring(0,2) + ":" + k[0].substring(2,4) + "</th>"
+        + "<th style=\"font-size: 10px\">" +  k[1]["time"]["period"]  +"h</th>"
         + "<th>" + k[1]["content"]["title"] + "</th>"
         + "<th>" + k[1]["content"]["message"] + "</th>"
         + "<th>" + "<img src=\"pen.png\" class=\"icon\" id=\"" + k[0] + "\"><button id=\""+ k[0] +"\">X</button>" + "</th>"
@@ -60,13 +61,14 @@ function show_alarms(dict_input) {
     }
 };
  
-function make_selection(id, num_start, num_end) {
+function make_selection(id, num_start, num_end, symbol = false) {
     let element      = document.getElementById(id);
     let doc_fragment = document.createDocumentFragment();
     for (let i = num_start; i <= num_end; i++) {
         let option = document.createElement('option'); // create the option element
         option.value = i; // set the value property  
-        option.appendChild(document.createTextNode(timeUIchange(i))); // set the textContent in a safe way.
+        if (symbol) { option.appendChild(document.createTextNode(timeUIchange(i)+" "+symbol)) }
+        else option.appendChild(document.createTextNode(timeUIchange(i))); // set the textContent in a safe way.
         doc_fragment.appendChild(option); // append the option to the document fragment
     }
     element.appendChild(doc_fragment); // append the document fragment to the DOM. this is the better way rather than setting innerHTML a bunch of times (or even once with a long string)
@@ -111,6 +113,7 @@ time_list.addEventListener('click', function(event){
 button1.addEventListener('click', function(){
     let hour   = document.getElementById("hour");
     let minute = document.getElementById("minute");
+    let period = document.getElementById("period");
     let ID     = timeUIchange(hour.value)+timeUIchange(minute.value);
     let title  = document.getElementById("title");
     let msg    = document.getElementById("msg");
@@ -130,6 +133,7 @@ button1.addEventListener('click', function(){
         time: {
             hour:    timeUIchange(hour.value),
             minute:  timeUIchange(minute.value),
+            period:  timeUIchange(period.value.substring(0, 2))
         },
         content: {
             title:   title.value,
@@ -140,7 +144,12 @@ button1.addEventListener('click', function(){
 
     //save alarm
     alarm.then(promose => {
-        promose.setAlarm(hour.value, minute.value, ModifyDate(hour.value, minute.value));
+        promose.setAlarm(
+            hour.value, 
+            minute.value, 
+            ModifyDate(hour.value, minute.value),
+            Number(period.value.substring(0, 2))*60
+        );
     }).catch(err => console.log(err));
     //save storage
     chrome.storage.sync.get('dict', data => {
@@ -156,6 +165,7 @@ button1.addEventListener('click', function(){
 
 make_selection('hour'  , 0, 23);
 make_selection('minute', 0, 59);
+make_selection('period', 1, 23, "H");
 
 
 

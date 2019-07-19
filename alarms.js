@@ -21,7 +21,7 @@ export function setAlarm(hour, minute, date = false, period = 24*60){
     };
 
     whenToRing.setHours(hour, minute, 0);
-    console.log(whenToRing);
+    console.log(whenToRing + " " +period + "h" );
 
 
     chrome.alarms.create( timeUIchange(hour) + timeUIchange(minute), {

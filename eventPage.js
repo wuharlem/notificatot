@@ -25,7 +25,8 @@ chrome.runtime.onInstalled.addListener(function() {
         dummy_data['1200'] = { 
           time:{
             hour:'12', 
-            minute: '00'
+            minute: '00',
+            period: '24'
           },
           content:{
             title:   'Sample',
@@ -45,7 +46,8 @@ chrome.runtime.onInstalled.addListener(function() {
             p.setAlarm(
               Number((k.substring(0, 2))),
               Number((k.substring(2, 4))), 
-              ModifyDate(Number(k.substring(0, 2)), Number((k.substring(2, 4))))
+              ModifyDate(Number(k.substring(0, 2)), Number((k.substring(2, 4)))),
+              Number((data.dict[k]["time"]["period"]))
             );
           });
         };
