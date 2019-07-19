@@ -1,5 +1,4 @@
 const alarm        = import("./alarms.js");
-const notification = import("./notifications.js");
 
 function ModifyDate(hour, minute) {
   let today = new Date();
