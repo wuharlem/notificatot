@@ -65,11 +65,11 @@ ul {
 }
 
 #time_list {
-    margin-top: 25px;
+    margin-top: 18px;
     font-size: 15px;
     overflow-y: scroll;
     overflow-x: scroll;
-    height: 90px;
+    height: 87px;
     width: 100%;
     font-family: 'Maven Pro', serif;
 }
