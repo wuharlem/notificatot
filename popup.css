@@ -17,11 +17,13 @@ body {
 .left {
     height: 20px;
     padding: 0 2px 0 0; 
+    vertical-align: -10%;
 }
 
 .icon {
     height: 13px;
     opacity: 0.7;
+    vertical-align:middle;
 }
 
 
@@ -65,7 +67,6 @@ ul {
 #time_list {
     margin-top: 25px;
     font-size: 15px;
-    /* overflow:scroll; */
     overflow-y: scroll;
     overflow-x: scroll;
     height: 90px;
@@ -75,7 +76,7 @@ ul {
 
 
 #notification {
-    padding-top: 38px;
+    padding-top: 20px;
     width: 100%;
     text-align: center;
     font-family: 'Maven Pro', serif;
@@ -84,14 +85,12 @@ ul {
 #right {
     float:right;
     height: 100px;
-    border: 1px solid black;
     width: 11px;
 }
 
 #left {
     float:left;
     height: 100px;
-    border: 1px solid black;
     width: 15px;
 }
 
@@ -121,8 +120,7 @@ ul {
 
 #middle {
     /* margin-top: 5px; */
-    height: 5px;
-    /* float: bottom; */
+    height: 20px;
     font-size: 12px;
     font-weight:  bold;
     text-align: center;
