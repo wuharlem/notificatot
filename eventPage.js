@@ -1,50 +1,52 @@
 const alarm        = import("./alarms.js");
 const notification = import("./notifications.js");
 
-//helper_function
-function time_helper_rev(str) {
-  if (parseInt(str, 10) < 10){
-      return str[1]
-  } else return str
+function ModifyDate(hour, minute) {
+  let today = new Date();
+  let date  = today.getDate();
+  if (today.getHours() > hour) {
+    date = date + 1;
+  } else if (today.getHours() == hour) {
+      if (today.getMinutes() > minute) {
+          date = date + 1;
+      };
+  };
+  return date
 }
 
 //when background.js activates
 chrome.runtime.onInstalled.addListener(function() {
-    console.log("app fired");
+    console.log("App fired!");
     chrome.storage.sync.get('dict', data => {
       if(data.dict === undefined){
-        console.log("dict is not setted.");
-        let example = {};
-        example['0520'] = { 
+        console.log("Initiate the app.");
+
+        let dummy_data = {};
+        dummy_data['1200'] = { 
           time:{
-            hour:'05', 
-            minute: '20'
+            hour:'12', 
+            minute: '00'
           },
           content:{
-            title:   '來自霖的關心',
-            message: '偶愛妳❤️',
-            iconUrl: 'IMG_7884.jpg'
+            title:   'Sample',
+            message: 'Get your own notice!',
+            iconUrl: 'icon.jpg'
           }
         };
         chrome.storage.sync.set({
-          dict:example
+          dict:dummy_data
         });
       }
       else {
-        console.log("list is setted.")
+        console.log("Alarms and notifications set.");
 
-        for (var k in data.dict) {
+        for (let k in data.dict) {
           alarm.then(p => {
-            let today = new Date();
-            let date  = today.getDate();
-            if (today.getHours() > time_helper_rev(k[0]+k[1])) {
-                date = date + 1;
-            } else if (today.getHours() == time_helper_rev(k[0]+k[1])) {
-                if (today.getMinutes() > time_helper_rev(k[2]+k[3])) {
-                    date = date + 1;
-                };
-            };
-            p.setAlarm(time_helper_rev(k[0]+k[1]), time_helper_rev(k[2]+k[3]), date)
+            p.setAlarm(
+              Number((k.substring(0, 2))),
+              Number((k.substring(2, 4))), 
+              ModifyDate(Number(k.substring(0, 2)), Number((k.substring(2, 4))))
+            );
           });
         };
       };
@@ -53,8 +55,6 @@ chrome.runtime.onInstalled.addListener(function() {
 
 //set notification when alarm elapsed
 chrome.alarms.onAlarm.addListener(alarm => {
-  console.log(alarm.name+" has notification now!");
-
   chrome.storage.sync.get('dict', data => {
     let info = data.dict[alarm.name];
     

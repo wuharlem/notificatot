@@ -1,12 +1,19 @@
-//helper_function
-function time_helper(str) {
-    if (parseInt(str, 10) < 10){
-        return "0"+str
-    } else return str
-}
+function timeUIchange(str) {
+    if (str < 10){
+        return "0" + str;
+    } else return str;
+};
 
 
 export function setAlarm(hour, minute, date = false, period = 24*60){
+    
+    try {
+        if(Number(hour) != hour && Number(minute) != minute && Number(minute) != date && Number(period) != period) 
+            throw "Input should be number."
+    } catch(error){
+        console.log(error);
+    };
+
     let whenToRing = new Date();
     
     if (date){
@@ -17,7 +24,7 @@ export function setAlarm(hour, minute, date = false, period = 24*60){
     console.log(whenToRing);
 
 
-    chrome.alarms.create( time_helper(hour)+time_helper(minute), {
+    chrome.alarms.create( timeUIchange(hour) + timeUIchange(minute), {
         when: whenToRing.valueOf(),
         periodInMinutes: period,
     });
